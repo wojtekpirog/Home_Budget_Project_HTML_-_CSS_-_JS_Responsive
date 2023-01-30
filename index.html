@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Wojciech Piróg" />
+    <meta name="keywords" content="household, budget, expenses, income" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="reset.css" />
+    <link rel="stylesheet" type="text/css" href="variables.css" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <title>Budget tracker</title>
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <h1 class="text-center">Budżet Domowy</h1>
+        <div class="logo">
+          <img
+            src="images/home_finance.png"
+            alt="Simple budget tracker"
+            title="Śledź swoje finanse!"
+          />
+        </div>
+        <p class="text-center state positive" id="balance_info">
+          Możesz jeszcze wydać X złotych
+        </p>
+      </header>
+
+      <section class="flex">
+        <div class="incomes">
+          <!--Pojemnik na przychody-->
+          <h2 class="list_header">Przychody</h2>
+          <form id="incomesForm" class="list_form">
+            <input
+              type="text"
+              id="incomeTitle"
+              placeholder="Enter income name"
+            />
+            <input type="number" id="incomeValue" placeholder="Enter amount" />
+            <button type="submit" class="input_button">Dodaj</button>
+          </form>
+          <!--lista rozwijana-->
+          <ul id="incomesList" class="list">
+            <!-- 
+            <li class="flex budget_list_item">
+              <p>Text input value <span>number input value</span> PLN</p>
+              <div class="buttons_container">
+                <button class="list_item_button edit_button">Edit</button>
+                <button class="list_item_button delete_button">Delete</button>
+              </div>
+            </li>
+
+            <li class="flex budget_list_item">
+              <p>Text input value: <span>number input value</span> PLN</p>
+              <div class="buttons_container">
+                <button class="list_item_button edit_button">Edit</button>
+                <button class="list_item_button delete_button">Delete</button>
+              </div>
+            </li> -->
+          </ul>
+          <!--lista rozwijana-->
+          <p class="list_summary incomes_summary">
+            Suma przychodów: <span id="incomes_value">0</span> PLN
+          </p>
+        </div>
+        <!--Pojemnik na wydatki-->
+        <div class="expenses">
+          <h2 class="list_header">Wydatki</h2>
+          <form id="expensesForm" class="list_form">
+            <input
+              type="text"
+              id="expenseTitle"
+              placeholder="Enter expense name"
+            />
+            <input type="number" id="expenseValue" placeholder="Enter amount" />
+            <button type="submit" class="input_button">Dodaj</button>
+          </form>
+          <!--lista rozwijana-->
+          <ul id="expensesList" class="list">
+            <!-- <li class="flex budget_list_item">
+              <p>Text input value: <span>number input value</span> PLN</p>
+              <div class="buttons_container">
+                <button class="list_item_button edit_button">Edit</button>
+                <button class="list_item_button delete_button">Delete</button>
+              </div>
+            </li>
+
+            <li class="flex budget_list_item">
+              <p>Text input value: <span>number input value</span> PLN</p>
+              <div class="buttons_container">
+                <button class="list_item_button edit_button">Edit</button>
+                <button class="list_item_button delete_button">Delete</button>
+              </div>
+            </li> -->
+          </ul>
+          <!--lista rozwijana-->
+          <p class="list_summary expenses_summary">
+            Suma wydatków: <span id="expenses_value">0</span> PLN
+          </p>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <a
+        target="_blank"
+        class="icon__credentials"
+        href="https://www.flaticon.com/free-icons/accounting"
+        title="accounting icons"
+        >Accounting icons created by Eucalyp - Flaticon</a
+      >
+    </footer>
+
+    <script src="project.js" type="module"></script>
+  </body>
+</html>
