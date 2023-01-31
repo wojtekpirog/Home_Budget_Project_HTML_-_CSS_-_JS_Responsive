@@ -35,7 +35,6 @@
 
       <section class="flex">
         <div class="incomes">
-          <!--Pojemnik na przychody-->
           <h2 class="list_header">Przychody</h2>
           <form id="incomesForm" class="list_form">
             <input
@@ -46,31 +45,11 @@
             <input type="number" id="incomeValue" placeholder="Enter amount" />
             <button type="submit" class="input_button">Dodaj</button>
           </form>
-          <!--lista rozwijana-->
-          <ul id="incomesList" class="list">
-            <!-- 
-            <li class="flex budget_list_item">
-              <p>Text input value <span>number input value</span> PLN</p>
-              <div class="buttons_container">
-                <button class="list_item_button edit_button">Edit</button>
-                <button class="list_item_button delete_button">Delete</button>
-              </div>
-            </li>
-
-            <li class="flex budget_list_item">
-              <p>Text input value: <span>number input value</span> PLN</p>
-              <div class="buttons_container">
-                <button class="list_item_button edit_button">Edit</button>
-                <button class="list_item_button delete_button">Delete</button>
-              </div>
-            </li> -->
-          </ul>
-          <!--lista rozwijana-->
+          <ul id="incomesList" class="list"></ul>
           <p class="list_summary incomes_summary">
             Suma przychodów: <span id="incomes_value">0</span> PLN
           </p>
         </div>
-        <!--Pojemnik na wydatki-->
         <div class="expenses">
           <h2 class="list_header">Wydatki</h2>
           <form id="expensesForm" class="list_form">
@@ -82,25 +61,7 @@
             <input type="number" id="expenseValue" placeholder="Enter amount" />
             <button type="submit" class="input_button">Dodaj</button>
           </form>
-          <!--lista rozwijana-->
-          <ul id="expensesList" class="list">
-            <!-- <li class="flex budget_list_item">
-              <p>Text input value: <span>number input value</span> PLN</p>
-              <div class="buttons_container">
-                <button class="list_item_button edit_button">Edit</button>
-                <button class="list_item_button delete_button">Delete</button>
-              </div>
-            </li>
-
-            <li class="flex budget_list_item">
-              <p>Text input value: <span>number input value</span> PLN</p>
-              <div class="buttons_container">
-                <button class="list_item_button edit_button">Edit</button>
-                <button class="list_item_button delete_button">Delete</button>
-              </div>
-            </li> -->
-          </ul>
-          <!--lista rozwijana-->
+          <ul id="expensesList" class="list"></ul>
           <p class="list_summary expenses_summary">
             Suma wydatków: <span id="expenses_value">0</span> PLN
           </p>

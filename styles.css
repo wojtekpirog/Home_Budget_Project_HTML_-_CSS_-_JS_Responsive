@@ -14,17 +14,16 @@ body {
 
 input {
   margin: 5px 0;
-  padding: 4px;
+  padding: 10px;
   outline: none;
   border: none;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: var(--font-m);
   letter-spacing: 1px;
 }
 
 .container {
-  width: 960px; /*Dla urządzeń < 1024px*/
-  height: calc(100vh - 50px);
+  width: 96%; /*Dla urządzeń < 1024px*/
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -50,6 +49,7 @@ h1 {
 
 .text-center {
   text-align: center;
+  padding-top: 30px;
 }
 
 h2 {
@@ -80,6 +80,7 @@ h2 {
 
 .flex {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
 }
 
@@ -88,22 +89,19 @@ h2 {
   margin-top: 30px;
 }
 
-.list {
-  padding: 20px 0;
-  border-top: 2px solid var(--deep-blue);
-  border-bottom: 2px solid var(--deep-blue);
-}
-
 .list_header {
   color: #f0d0b4;
 }
 
 .list_form {
+  display: flex;
+  flex-direction: column;
   margin: 15px 0;
 }
 
 .input_button {
-  padding: 5px;
+  padding: 10px;
+  margin-top: 5px;
   outline: none;
   border: none;
   background: var(--golden);
@@ -111,14 +109,9 @@ h2 {
   font-weight: bold;
 }
 
-.input_button:hover {
-  background-color: var(--zero);
-}
-
 .list_summary {
   display: inline-block;
   margin: 30px 0;
-  font-size: var(--font-m);
   font-weight: bold;
 }
 
@@ -131,8 +124,8 @@ h2 {
 }
 
 footer {
-  height: 50px;
-  padding: 17px;
+  height: 76px;
+  padding: 30px;
   text-align: center;
 }
 
@@ -142,24 +135,31 @@ footer a {
   transition: color 0.5s;
 }
 
-footer a:hover {
-  color: var(--biscuit);
-  cursor: pointer;
-}
-
 /*A SAMPLE STYLING OF A BUDGET LIST ITEM*/
+.list {
+  padding: 20px 0;
+  border-top: 2px solid var(--deep-blue);
+  border-bottom: 2px solid var(--deep-blue);
+}
 
 .budget_list_item {
   padding: 5px;
   align-items: center;
 }
 
+.budget_list_item p,
+.budget_list_item span {
+  margin: 6px;
+  font-size: var(--font-m);
+}
+
 .list_item_button {
-  padding: 4px 8px;
+  padding: 10px 20px;
+  margin-top: 6px;
   border: none;
   outline: none;
   border-radius: 2px;
-  font-size: var(--font-sm);
+  font-size: var(--font-m);
   font-weight: bold;
 }
 
@@ -170,28 +170,75 @@ footer a:hover {
   transition: background-color 0.5s;
 }
 
-.edit_button:hover {
-  background-color: blue;
-}
-
 .delete_button {
   background-color: var(--negative);
   color: var(--white);
+  margin-left: 6px;
   transition: background-color 0.5s;
-}
-
-.delete_button:hover {
-  background-color: darkred;
 }
 
 /*A SAMPLE STYLING OF A BUDGET LIST ITEM*/
 
 /***MEDIA QUERIES***/
-/* @media screen and (min-width: 1024px) {
+@media only screen and (min-width: 768px) {
+  .list_summary {
+    font-size: var(--font-m);
+  }
+}
+
+@media only screen and (min-width: 1024px) {
   .container {
     width: 960px;
+    height: calc(100vh - 50px);
+  }
+  .text-center {
+    padding-top: 0;
   }
   .flex {
     flex-direction: row;
   }
-} */
+  .list_form {
+    display: block;
+  }
+  input {
+    margin: 5px 0;
+    padding: 4px;
+    font-size: 16px;
+  }
+  .input_button {
+    padding: 5px;
+    margin: 0;
+  }
+  .input_button:hover {
+    background-color: var(--zero);
+  }
+  .budget_list_item p,
+  .budget_list_item span {
+    font-size: 16px;
+  }
+  .budget_list_item p,
+  .budget_list_item span {
+    margin: 0;
+  }
+  .list_item_button {
+    padding: 4px 8px;
+    font-size: var(--font-sm);
+  }
+  .list_summary {
+    font-size: var(--font-m);
+  }
+  .edit_button:hover {
+    background-color: blue;
+  }
+  .delete_button:hover {
+    background-color: darkred;
+  }
+  footer {
+    height: 50px;
+    padding: 17px;
+  }
+  footer a:hover {
+    color: var(--biscuit);
+    cursor: pointer;
+  }
+}
