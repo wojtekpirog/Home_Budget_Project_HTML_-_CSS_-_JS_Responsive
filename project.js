@@ -9,7 +9,7 @@ const incomeValue = document.querySelector("#incomeValue"); //wartość przychod
 const expenseValue = document.querySelector("#expenseValue"); //wartość wydatku
 const incomesSumSpan = document.querySelector("#incomes_value"); //span do "wyplucia sumy dochodów"
 const expensesSumSpan = document.querySelector("#expenses_value"); //span do "wyplucia sumy wydatków"
-const balanceInfo = document.querySelector("#balanceInfo"); //Informacja o stanie konta
+const balanceInfo = document.getElementById("balance_info"); //Informacja o stanie konta
 
 const incomes = []; //W tej tablicy będą zapisywane dochody
 const expenses = []; //W tej tablicy będą zapisywane wydatki
@@ -30,6 +30,7 @@ function addIncome(income) {
   span.innerText = income.amount;
 
   const btnContainer = document.createElement("div");
+  btnContainer.classList.add("item--buttons_container");
 
   const editBtn = document.createElement("button");
   editBtn.classList = "list_item_button edit_button";
@@ -50,37 +51,73 @@ function addIncome(income) {
 
   incomeTitle.value = "";
   incomeValue.value = "";
-  //funkcja do edytowania elementu listy incomesList
+
   editBtn.addEventListener("click", function () {
-    editItem(income);
+    editIncome(income);
   });
-  //funkcja do usuwania elementu listy incomesList
+
   removeBtn.addEventListener("click", function () {
-    deleteItem();
+    deleteIncome();
   });
 }
 
-function editItem(income) {
-  console.log(income);
+function editIncome(income) {
+
+  const targetLi = document.getElementById(`${income.id}`); //income.id = li.id (identyfikator elementu listy)
+  const paragraphWithTitle = targetLi.querySelector("p"); //złapanie paragrafu, w którym jest tytuł przychodu
+  const spanWithValue = targetLi.querySelector("span"); //złapanie span, w którym jest kwota przychodu
+
+  paragraphWithTitle.setAttribute("contenteditable", "true"); 
+  spanWithValue.setAttribute("contenteditable", "true"); 
+
+  const divForBtns = document.createElement("div");
+
+  const saveBtn = document.createElement("button");
+  saveBtn.innerText = "Zapisz";
+  saveBtn.classList.add("edit_button", "list_item_button");
+
+  divForBtns.appendChild(saveBtn);
+
+  const doNotSaveButton = document.createElement("button");
+  doNotSaveButton.innerText = "Nie zapisuj";
+  doNotSaveButton.classList.add("delete_button", "list_item_button");
+
+  divForBtns.appendChild(doNotSaveButton);
+
+  targetLi.appendChild(divForBtns);
+
+  const btnDiv = document.getElementsByClassName("item--buttons_container")[0]; 
+  //Klasę nadałem div-owi w 33 linijce. Div przechowuje editBtn i removeBtn. Po kliknięciu w ten pierwszy, div znika
+  btnDiv.setAttribute("style", "display: none;");
+
+  saveBtn.addEventListener("click", () => {
+
+    income.title = paragraphWithTitle.innerText;
+    income.amount = Number(spanWithValue.innerText); 
+
+    paragraphWithTitle.setAttribute("contenteditable", "false"); 
+    spanWithValue.setAttribute("contenteditable", "false");
+
+    targetLi.removeChild(divForBtns);
+    btnDiv.setAttribute("style", "display: block;");
+
+    renderIncomesList();
+    sumIncomes(); 
+         
+  });
+
+  // doNotSaveButton.addEventListener("click", () => {
+
+  // })
 }
 
-function deleteItem() {
+function deleteIncome() {
   incomes.filter((income) => {
     incomes.splice(income, 1);
   });
-
   renderIncomesList();
   sumIncomes();
 }
-
-// function deleteItem(income) {
-//   console.log(income);
-//   incomes.filter((item) => {
-//     return income.id !== item.id;
-//   });
-//   renderIncomesList();
-//   sumIncomes();
-// }
 
 //funkcja sumująca wszystkie income.amount z incomes i dodająca je do zmiennej sumOfIncomes
 
@@ -90,6 +127,7 @@ function sumIncomes() {
     sumOfIncomes += income.amount;
   });
   incomesSumSpan.innerText = sumOfIncomes;
+  return sumOfIncomes;
 }
 //funkcja renderująca listę (wyświetlająca listę w body)
 function renderIncomesList() {
@@ -133,7 +171,7 @@ incomesForm.addEventListener("submit", (e) => {
 function addExpense(expense) {
   //zadaniem tej funkcji będzie tworzenie elementów listy (tutaj argument 'expense' jest obiektem w tablicy 'expenses')
   const li = document.createElement("li");
-  li.id = expense.id;
+  li.id = expense.id; 
   li.classList = "flex budget_list_item";
 
   const paragraph = document.createElement("p");
@@ -143,6 +181,7 @@ function addExpense(expense) {
   span.innerText = expense.amount;
 
   const btnContainer = document.createElement("div");
+  btnContainer.classList.add("item--buttons_container");
 
   const editBtn = document.createElement("button");
   editBtn.classList = "list_item_button edit_button";
@@ -161,16 +200,70 @@ function addExpense(expense) {
 
   expensesList.appendChild(li);
 
-  editBtn.addEventListener("click", () => {
-    editItem(expense);
+  editBtn.addEventListener("click", function () {
+    editExpense(expense);
   });
 
   removeBtn.addEventListener("click", function () {
-    removeItem();
+    deleteExpense();
   });
 }
 
-function removeItem() {
+function editExpense(expense) {
+
+    const targetLi = document.getElementById(`${expense.id}`);
+    const paragraphWithTitle = targetLi.querySelector("p");
+    const spanWithValue = targetLi.querySelector("span");
+
+    paragraphWithTitle.setAttribute("contenteditable", "true");
+    spanWithValue.setAttribute("contenteditable", "true");
+
+    const divForBtns = document.createElement("div"); 
+
+    const saveBtn = document.createElement("button");
+    saveBtn.innerText = "Zapisz";
+    saveBtn.classList.add("edit_button", "list_item_button");
+
+    divForBtns.appendChild(saveBtn);
+
+    const doNotSaveButton = document.createElement("button");
+    doNotSaveButton.innerText = "Nie zapisuj";
+    doNotSaveButton.classList.add("delete_button", "list_item_button");
+
+    divForBtns.appendChild(doNotSaveButton);
+
+    targetLi.appendChild(divForBtns);
+
+    // const editBtn = document.getElementsByClassName("edit_button")[0];
+    // const deleteBtn = document.getElementsByClassName("delete_button")[0];
+    // editBtn.setAttribute("style", "display: none;");
+    // deleteBtn.setAttribute("style", "display: none;");
+
+    const btnDiv = document.getElementsByClassName("item--buttons_container")[0];
+    //Klasę nadałem elementowi div w 179 linijce. Div przechowuje editBtn i removeBtn. Po kliknięciu pierwszego div znika
+    btnDiv.setAttribute("style", "display: none;");
+
+    saveBtn.addEventListener("click", function () {
+
+      expense.title = paragraphWithTitle.innerText;
+      expense.amount = Number(spanWithValue.innerText);
+
+      paragraphWithTitle.setAttribute("contenteditable", "false");
+      spanWithValue.setAttribute("contenteditable", "false");
+
+      targetLi.removeChild(divForBtns);
+      btnDiv.setAttribute("style", "display: block;");
+
+      renderExpensesList();
+      sumIncomes();
+    })
+
+    // doNotSaveButton.addEventListener("click", function () {
+
+    // })
+}
+
+function deleteExpense() {
   expenses.filter((expense) => {
     expenses.splice(expense, 1);
   });
@@ -178,10 +271,6 @@ function removeItem() {
   renderExpensesList();
   sumExpenses();
 }
-
-// const editItem = (expense) => {
-//   console.log(expense);
-// }
 
 function renderExpensesList() {
   expensesList.innerHTML = "";
@@ -198,7 +287,7 @@ function sumExpenses() {
     sumOfExpenses += expense.amount;
   });
   expensesSumSpan.innerText = sumOfExpenses;
-  console.log(sumOfExpenses);
+  return sumOfExpenses;
 }
 
 function addNewExpense() {
@@ -227,8 +316,17 @@ function addNewExpense() {
 
 expensesForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  addNewExpense();
+  let sumOfExpenses = addNewExpense();
+  console.log(`Suma wydatków wynosi: ${sumOfExpenses}`);
 });
+
+// const sumOfIncomes = sumIncomes();
+// const sumOfExpenses = sumExpenses();
+// console.log(sumOfIncomes);
+// console.log(sumOfExpenses);
+// let ALL_INCOMES = Number(expensesSumSpan.innerText);
+
+// balanceInfo.innerHTML = `Suma wydatków wynosi: ${ALL_INCOMES}`;
 
 /* SPRAWDZENIE CO WIĘKSZE */
 // let IncomesSumSpanAsNumber = Number(incomesSumSpan.innerText);
