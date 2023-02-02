@@ -16,9 +16,7 @@ const expenses = []; //W tej tablicy będą zapisywane wydatki
 
 /*** DODAWANIE DOCHODÓW ***/
 
-//Funkcja tworząca wizualny element listy (i wstawiająca do do listy ul z przychodami):
 function addIncome(income) {
-  //zadaniem tej funkcji będzie tworzenie elementów listy (tutaj argument 'income' jest obiektem w tablicy 'incomes')
   const li = document.createElement("li");
   li.id = income.id;
   li.classList = "flex budget_list_item";
@@ -87,10 +85,9 @@ function editIncome(income) {
   targetLi.appendChild(divForBtns);
 
   const btnDiv = document.getElementsByClassName("item--buttons_container")[0]; 
-  //Klasę nadałem div-owi w 33 linijce. Div przechowuje editBtn i removeBtn. Po kliknięciu w ten pierwszy, div znika
   btnDiv.setAttribute("style", "display: none;");
 
-  saveBtn.addEventListener("click", () => {
+  saveBtn.addEventListener("click", function () {
 
     income.title = paragraphWithTitle.innerText;
     income.amount = Number(spanWithValue.innerText); 
@@ -102,8 +99,7 @@ function editIncome(income) {
     btnDiv.setAttribute("style", "display: block;");
 
     renderIncomesList();
-    sumIncomes(); 
-         
+    sumAll();         
   });
 
   // doNotSaveButton.addEventListener("click", () => {
@@ -116,20 +112,9 @@ function deleteIncome() {
     incomes.splice(income, 1);
   });
   renderIncomesList();
-  sumIncomes();
+  sumAll();
 }
 
-//funkcja sumująca wszystkie income.amount z incomes i dodająca je do zmiennej sumOfIncomes
-
-function sumIncomes() {
-  let sumOfIncomes = 0; // zmienna pomocnicza - przechowuje sumę przychodów
-  incomes.forEach((income) => {
-    sumOfIncomes += income.amount;
-  });
-  incomesSumSpan.innerText = sumOfIncomes;
-  return sumOfIncomes;
-}
-//funkcja renderująca listę (wyświetlająca listę w body)
 function renderIncomesList() {
   incomesList.innerHTML = "";
   incomes.forEach((income) => {
@@ -150,14 +135,13 @@ function addNewIncome() {
     if (!newIncome.title) {
       alert("Podaj tytuł Twojego przychodu!");
     } else {
-      incomes.push(newIncome); //Dodanie obiektu do tablicy
+      incomes.push(newIncome); 
     }
   } else {
     alert("Podaj liczbę większą od zera!");
   }
-  //Teraz newIncome (jako obiekt) jest już w tablicy incomes
-  //Za każdym razem, gdy zostanie dodany nowy przychód do Array, należy wyrenderować listę, a następnie zsumować wartości.
-  sumIncomes();
+
+  sumAll();
   renderIncomesList();
 }
 
@@ -169,7 +153,6 @@ incomesForm.addEventListener("submit", (e) => {
 /*** DODAWANIE WYDATKÓW ***/
 
 function addExpense(expense) {
-  //zadaniem tej funkcji będzie tworzenie elementów listy (tutaj argument 'expense' jest obiektem w tablicy 'expenses')
   const li = document.createElement("li");
   li.id = expense.id; 
   li.classList = "flex budget_list_item";
@@ -210,57 +193,53 @@ function addExpense(expense) {
 }
 
 function editExpense(expense) {
+  const targetLi = document.getElementById(`${expense.id}`);
+  const paragraphWithTitle = targetLi.querySelector("p");
+  const spanWithValue = targetLi.querySelector("span");
+  const editBtn = document.getElementsByClassName("edit_button")[0];
+  const deleteBtn = document.getElementsByClassName("delete_button")[0];
 
-    const targetLi = document.getElementById(`${expense.id}`);
-    const paragraphWithTitle = targetLi.querySelector("p");
-    const spanWithValue = targetLi.querySelector("span");
+  paragraphWithTitle.setAttribute("contenteditable", "true");
+  spanWithValue.setAttribute("contenteditable", "true");
 
-    paragraphWithTitle.setAttribute("contenteditable", "true");
-    spanWithValue.setAttribute("contenteditable", "true");
+  const divForBtns = document.createElement("div"); 
 
-    const divForBtns = document.createElement("div"); 
+  const saveBtn = document.createElement("button");
+  saveBtn.innerText = "Zapisz";
+  saveBtn.classList.add("edit_button", "list_item_button");
 
-    const saveBtn = document.createElement("button");
-    saveBtn.innerText = "Zapisz";
-    saveBtn.classList.add("edit_button", "list_item_button");
+  divForBtns.appendChild(saveBtn);
 
-    divForBtns.appendChild(saveBtn);
+  const doNotSaveButton = document.createElement("button");
+  doNotSaveButton.innerText = "Nie zapisuj";
+  doNotSaveButton.classList.add("delete_button", "list_item_button");
 
-    const doNotSaveButton = document.createElement("button");
-    doNotSaveButton.innerText = "Nie zapisuj";
-    doNotSaveButton.classList.add("delete_button", "list_item_button");
+  divForBtns.appendChild(doNotSaveButton);
 
-    divForBtns.appendChild(doNotSaveButton);
+  targetLi.appendChild(divForBtns);
 
-    targetLi.appendChild(divForBtns);
+  editBtn.setAttribute("style", "display: none");
+  deleteBtn.setAttribute("style", "display: none");
 
-    // const editBtn = document.getElementsByClassName("edit_button")[0];
-    // const deleteBtn = document.getElementsByClassName("delete_button")[0];
-    // editBtn.setAttribute("style", "display: none;");
-    // deleteBtn.setAttribute("style", "display: none;");
+  const btnDiv = document.getElementsByClassName("item--buttons_container")[0];
+  btnDiv.setAttribute("style", "display: none;");
 
-    const btnDiv = document.getElementsByClassName("item--buttons_container")[0];
-    //Klasę nadałem elementowi div w 179 linijce. Div przechowuje editBtn i removeBtn. Po kliknięciu pierwszego div znika
-    btnDiv.setAttribute("style", "display: none;");
+  saveBtn.addEventListener("click", () => {
 
-    saveBtn.addEventListener("click", function () {
+    expense.title = paragraphWithTitle.innerText;
+    expense.amount = Number(spanWithValue.innerText);
 
-      expense.title = paragraphWithTitle.innerText;
-      expense.amount = Number(spanWithValue.innerText);
+    paragraphWithTitle.setAttribute("contenteditable", "false");
+    spanWithValue.setAttribute("contenteditable", "false");
 
-      paragraphWithTitle.setAttribute("contenteditable", "false");
-      spanWithValue.setAttribute("contenteditable", "false");
+    targetLi.removeChild(divForBtns);
+    btnDiv.setAttribute("style", "display: block;");
 
-      targetLi.removeChild(divForBtns);
-      btnDiv.setAttribute("style", "display: block;");
+  })
 
-      renderExpensesList();
-      sumIncomes();
-    })
+  // doNotSaveButton.addEventListener("click", () => {
 
-    // doNotSaveButton.addEventListener("click", function () {
-
-    // })
+  // })
 }
 
 function deleteExpense() {
@@ -269,7 +248,7 @@ function deleteExpense() {
   });
 
   renderExpensesList();
-  sumExpenses();
+  sumAll();
 }
 
 function renderExpensesList() {
@@ -281,13 +260,43 @@ function renderExpensesList() {
   expenseValue.value = "";
 }
 
-function sumExpenses() {
+function sumAll() {
+  let sumOfIncomes = 0; 
+
+  incomes.forEach((income) => {
+    sumOfIncomes += income.amount;
+    return sumOfIncomes;    
+  });
+  incomesSumSpan.innerText = sumOfIncomes;
+
   let sumOfExpenses = 0;
+
   expenses.forEach((expense) => {
     sumOfExpenses += expense.amount;
+    return sumOfExpenses;    
   });
   expensesSumSpan.innerText = sumOfExpenses;
-  return sumOfExpenses;
+
+  const difference = calculateDifference(sumOfIncomes, sumOfExpenses);
+
+  toggleText(difference);
+}
+
+function calculateDifference(sumOfIncomes, sumOfExpenses) {
+  return sumOfIncomes - sumOfExpenses;
+}
+
+function toggleText(difference) {
+  if (difference > 0) {
+    balanceInfo.classList = "text-center state positive";
+    balanceInfo.innerHTML = `Możesz jeszcze wydać ${difference} złotych.`;   
+  } else if (difference === 0) {
+    balanceInfo.classList = "text-center state zero";
+    balanceInfo.innerHTML = "Bilans wynosi zero.";   
+  } else {
+    balanceInfo.innerHTML = `Bilans jest ujemny. Jesteś na minusie ${Math.abs(difference)} złotych.`;
+    balanceInfo.classList = "text-center state negative";
+  }
 }
 
 function addNewExpense() {
@@ -308,40 +317,12 @@ function addNewExpense() {
   } else {
     alert("Podaj liczbę większą od zera!");
   }
-  //Teraz newExpense znajduje się w tablicy expenses = [newExpense, newExpense, ...]
-  //Za każdym razem, gdy zostanie dodany nowy expense, należy wyrenderować listę, a następnie zsumować wartości
+
   renderExpensesList();
-  sumExpenses();
+  sumAll();
 }
 
 expensesForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  let sumOfExpenses = addNewExpense();
-  console.log(`Suma wydatków wynosi: ${sumOfExpenses}`);
+  addNewExpense();
 });
-
-// const sumOfIncomes = sumIncomes();
-// const sumOfExpenses = sumExpenses();
-// console.log(sumOfIncomes);
-// console.log(sumOfExpenses);
-// let ALL_INCOMES = Number(expensesSumSpan.innerText);
-
-// balanceInfo.innerHTML = `Suma wydatków wynosi: ${ALL_INCOMES}`;
-
-/* SPRAWDZENIE CO WIĘKSZE */
-// let IncomesSumSpanAsNumber = Number(incomesSumSpan.innerText);
-// console.log(sumOfIncomes);
-// let ExpensesSumSpanAsNumber = Number(expensesSumSpan.innerText);
-// console.log(ExpensesSumSpanAsNumber);
-
-// if (IncomesSumSpanAsNumber > ExpensesSumSpanAsNumber) {
-//   balanceInfo.innerText = `Możesz jeszcze wydać ${
-//     IncomesSumSpanAsNumber - ExpensesSumSpanAsNumber
-//   } złotych`;
-// }
-// else if(IncomesSumSpanAsNumber < ExpensesSumSpanAsNumber) {
-//   balanceInfo.innerText = `Bilans jest ujemny. Jesteś na minusie ${IncomesSumSpanAsNumber-ExpensesSumSpanAsNumber} złotych`;
-// }
-// else {
-//   balanceInfo.innerText = "Bilans wynosi zero";
-// }
