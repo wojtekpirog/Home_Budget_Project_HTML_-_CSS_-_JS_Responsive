@@ -23,7 +23,7 @@ input {
 }
 
 .container {
-  width: 96%; /*Dla urządzeń < 1024px*/
+  width: 96%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -63,17 +63,14 @@ h2 {
   font-weight: bold;
 }
 
-/*This class can be used when the value is greater than 0*/
 .positive {
   color: var(--positive);
 }
 
-/*This class can be used when the value is 0*/
 .zero {
   color: var(--zero);
 }
 
-/*This class can be used when the value is below 0*/
 .negative {
   color: var(--negative);
 }
@@ -132,10 +129,9 @@ footer {
 footer a {
   color: var(--white);
   text-decoration: none;
-  transition: color 0.5s;
+  transition: color 0.5s linear;
 }
 
-/*A SAMPLE STYLING OF A BUDGET LIST ITEM*/
 .list {
   padding: 20px 0;
   border-top: 2px solid var(--deep-blue);
@@ -167,19 +163,16 @@ footer a {
   background-color: var(--deep-blue);
   color: var(--white);
   margin-right: 6px;
-  transition: background-color 0.5s;
+  transition: background-color 0.5s linear;
 }
 
 .delete_button {
   background-color: var(--negative);
   color: var(--white);
   margin-left: 6px;
-  transition: background-color 0.5s;
+  transition: background-color 0.5s linear;
 }
 
-/*A SAMPLE STYLING OF A BUDGET LIST ITEM*/
-
-/***MEDIA QUERIES***/
 @media only screen and (min-width: 768px) {
   .list_summary {
     font-size: var(--font-m);

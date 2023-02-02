@@ -1,20 +1,18 @@
 import { v4 as uuidv4 } from "https://jspm.dev/uuid";
-const incomesList = document.querySelector("#incomesList"); 
-const expensesList = document.querySelector("#expensesList"); 
-const incomesForm = document.querySelector("#incomesForm"); 
-const expensesForm = document.querySelector("#expensesForm"); 
-const incomeTitle = document.querySelector("#incomeTitle"); 
-const expenseTitle = document.querySelector("#expenseTitle"); 
-const incomeValue = document.querySelector("#incomeValue"); 
-const expenseValue = document.querySelector("#expenseValue"); 
-const incomesSumSpan = document.querySelector("#incomes_value"); 
-const expensesSumSpan = document.querySelector("#expenses_value"); 
-const balanceInfo = document.getElementById("balance_info"); 
+const incomesList = document.querySelector("#incomesList");
+const expensesList = document.querySelector("#expensesList");
+const incomesForm = document.querySelector("#incomesForm");
+const expensesForm = document.querySelector("#expensesForm");
+const incomeTitle = document.querySelector("#incomeTitle");
+const expenseTitle = document.querySelector("#expenseTitle");
+const incomeValue = document.querySelector("#incomeValue");
+const expenseValue = document.querySelector("#expenseValue");
+const incomesSumSpan = document.querySelector("#incomes_value");
+const expensesSumSpan = document.querySelector("#expenses_value");
+const balanceInfo = document.getElementById("balance_info");
 
-const incomes = []; 
+const incomes = [];
 const expenses = [];
-
-/*** DODAWANIE DOCHODÓW ***/
 
 function addIncome(income) {
   const li = document.createElement("li");
@@ -57,14 +55,13 @@ function addIncome(income) {
 }
 
 function editIncome(income) {
-  const incomeIndex = incomes.indexOf(income); 
+  const incomeIndex = incomes.indexOf(income);
+  const targetLi = document.getElementById(`${income.id}`);
+  const paragraphWithTitle = targetLi.querySelector("p");
+  const spanWithValue = targetLi.querySelector("span");
 
-  const targetLi = document.getElementById(`${income.id}`); 
-  const paragraphWithTitle = targetLi.querySelector("p"); 
-  const spanWithValue = targetLi.querySelector("span"); 
-
-  paragraphWithTitle.setAttribute("contenteditable", "true"); 
-  spanWithValue.setAttribute("contenteditable", "true"); 
+  paragraphWithTitle.setAttribute("contenteditable", "true");
+  spanWithValue.setAttribute("contenteditable", "true");
 
   const divForBtns = document.createElement("div");
 
@@ -81,34 +78,36 @@ function editIncome(income) {
   divForBtns.appendChild(doNotSaveButton);
 
   targetLi.appendChild(divForBtns);
- 
-  const btnDiv = document.getElementsByClassName("item--buttons_container")[incomeIndex];
-  targetLi.removeChild(btnDiv); 
+
+  const btnDiv = document.getElementsByClassName("item--buttons_container")[
+    incomeIndex
+  ];
+  targetLi.removeChild(btnDiv);
 
   saveBtn.addEventListener("click", function () {
     income.title = paragraphWithTitle.innerText;
-    income.amount = Number(spanWithValue.innerText); 
+    income.amount = Number(spanWithValue.innerText);
 
-    paragraphWithTitle.setAttribute("contenteditable", "false"); 
+    paragraphWithTitle.setAttribute("contenteditable", "false");
     spanWithValue.setAttribute("contenteditable", "false");
 
     targetLi.removeChild(divForBtns);
     targetLi.appendChild(btnDiv);
 
     renderIncomesList();
-    sumAll();         
+    sumAll();
   });
 
   doNotSaveButton.addEventListener("click", function () {
-    paragraphWithTitle.setAttribute("contenteditable", "false"); 
-    spanWithValue.setAttribute("contenteditable", "false"); 
-    
+    paragraphWithTitle.setAttribute("contenteditable", "false");
+    spanWithValue.setAttribute("contenteditable", "false");
+
     targetLi.removeChild(divForBtns);
     targetLi.appendChild(btnDiv);
 
     renderIncomesList();
-    sumAll();    
-  })
+    sumAll();
+  });
 }
 
 function deleteIncome(income) {
@@ -123,6 +122,8 @@ function renderIncomesList() {
   incomes.forEach((income) => {
     addIncome(income);
   });
+  incomeTitle.value = "";
+  incomeValue.value = "";
 }
 
 function addNewIncome() {
@@ -138,7 +139,7 @@ function addNewIncome() {
     if (!newIncome.title) {
       alert("Podaj tytuł Twojego przychodu!");
     } else {
-      incomes.push(newIncome); 
+      incomes.push(newIncome);
     }
   } else {
     alert("Podaj liczbę większą od zera!");
@@ -152,8 +153,6 @@ incomesForm.addEventListener("submit", (e) => {
   e.preventDefault();
   addNewIncome();
 });
-
-/*** DODAWANIE WYDATKÓW ***/
 
 function addExpense(expense) {
   const li = document.createElement("li");
@@ -196,8 +195,7 @@ function addExpense(expense) {
 }
 
 function editExpense(expense) {
-  const expenseIndex = expenses.indexOf(expense); 
-
+  const expenseIndex = expenses.indexOf(expense);
   const targetLi = document.getElementById(`${expense.id}`);
   const paragraphWithTitle = targetLi.querySelector("p");
   const spanWithValue = targetLi.querySelector("span");
@@ -205,7 +203,7 @@ function editExpense(expense) {
   paragraphWithTitle.setAttribute("contenteditable", "true");
   spanWithValue.setAttribute("contenteditable", "true");
 
-  const divForBtns = document.createElement("div"); 
+  const divForBtns = document.createElement("div");
 
   const saveBtn = document.createElement("button");
   saveBtn.innerText = "Zapisz";
@@ -221,7 +219,9 @@ function editExpense(expense) {
 
   targetLi.appendChild(divForBtns);
 
-  const btnDiv = document.getElementsByClassName("item--buttons_container")[expenseIndex];
+  const btnDiv = document.getElementsByClassName("item--buttons_container")[
+    expenseIndex
+  ];
   targetLi.removeChild(btnDiv);
 
   saveBtn.addEventListener("click", function () {
@@ -235,8 +235,8 @@ function editExpense(expense) {
     targetLi.appendChild(btnDiv);
 
     renderExpensesList();
-    sumAll();    
-  })
+    sumAll();
+  });
 
   doNotSaveButton.addEventListener("click", function () {
     paragraphWithTitle.setAttribute("contenteditable", "false");
@@ -247,12 +247,12 @@ function editExpense(expense) {
 
     renderExpensesList();
     sumAll();
-  })
+  });
 }
 
 function deleteExpense(expense) {
   const index = expenses.indexOf(expense);
-  expenses.splice(expenses[index], 1); 
+  expenses.splice(expenses[index], 1);
   renderExpensesList();
   sumAll();
 }
@@ -267,11 +267,11 @@ function renderExpensesList() {
 }
 
 function sumAll() {
-  let sumOfIncomes = 0; 
+  let sumOfIncomes = 0;
 
   incomes.forEach((income) => {
     sumOfIncomes += income.amount;
-    return sumOfIncomes;    
+    return sumOfIncomes;
   });
   incomesSumSpan.innerText = sumOfIncomes;
 
@@ -279,7 +279,7 @@ function sumAll() {
 
   expenses.forEach((expense) => {
     sumOfExpenses += expense.amount;
-    return sumOfExpenses;    
+    return sumOfExpenses;
   });
   expensesSumSpan.innerText = sumOfExpenses;
 
@@ -295,12 +295,14 @@ function calculateDifference(sumOfIncomes, sumOfExpenses) {
 function toggleText(difference) {
   if (difference > 0) {
     balanceInfo.classList = "text-center state positive";
-    balanceInfo.innerHTML = `Możesz jeszcze wydać ${difference} złotych.`;   
+    balanceInfo.innerHTML = `Możesz jeszcze wydać ${difference} złotych.`;
   } else if (difference === 0) {
     balanceInfo.classList = "text-center state zero";
-    balanceInfo.innerHTML = "Bilans wynosi zero.";   
+    balanceInfo.innerHTML = "Bilans wynosi zero.";
   } else {
-    balanceInfo.innerHTML = `Bilans jest ujemny. Jesteś na minusie ${Math.abs(difference)} złotych.`;
+    balanceInfo.innerHTML = `Bilans jest ujemny. Jesteś na minusie ${Math.abs(
+      difference
+    )} złotych.`;
     balanceInfo.classList = "text-center state negative";
   }
 }
@@ -309,7 +311,7 @@ function addNewExpense() {
   const newExpense = {
     title: expenseTitle.value,
     amount: Number(expenseValue.value),
-    id: uuidv4(), 
+    id: uuidv4(),
   };
 
   if (!newExpense.amount) {
@@ -328,7 +330,7 @@ function addNewExpense() {
   sumAll();
 }
 
-expensesForm.addEventListener("submit", (event) => {
-  event.preventDefault();
+expensesForm.addEventListener("submit", (e) => {
+  e.preventDefault();
   addNewExpense();
 });
