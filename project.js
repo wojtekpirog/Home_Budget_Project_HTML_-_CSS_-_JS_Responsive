@@ -1,18 +1,18 @@
 import { v4 as uuidv4 } from "https://jspm.dev/uuid";
-const incomesList = document.querySelector("#incomesList"); //lista ul z przychodami
-const expensesList = document.querySelector("#expensesList"); //lista ul z wydatkami
-const incomesForm = document.querySelector("#incomesForm"); //formularz do podawania przychodu
-const expensesForm = document.querySelector("#expensesForm"); //formularz do podawania wydatków
-const incomeTitle = document.querySelector("#incomeTitle"); //tytuł przychodu
-const expenseTitle = document.querySelector("#expenseTitle"); //tytuł wydatku
-const incomeValue = document.querySelector("#incomeValue"); //wartość przychodu
-const expenseValue = document.querySelector("#expenseValue"); //wartość wydatku
-const incomesSumSpan = document.querySelector("#incomes_value"); //span do "wyplucia sumy dochodów"
-const expensesSumSpan = document.querySelector("#expenses_value"); //span do "wyplucia sumy wydatków"
-const balanceInfo = document.getElementById("balance_info"); //Informacja o stanie konta
+const incomesList = document.querySelector("#incomesList"); 
+const expensesList = document.querySelector("#expensesList"); 
+const incomesForm = document.querySelector("#incomesForm"); 
+const expensesForm = document.querySelector("#expensesForm"); 
+const incomeTitle = document.querySelector("#incomeTitle"); 
+const expenseTitle = document.querySelector("#expenseTitle"); 
+const incomeValue = document.querySelector("#incomeValue"); 
+const expenseValue = document.querySelector("#expenseValue"); 
+const incomesSumSpan = document.querySelector("#incomes_value"); 
+const expensesSumSpan = document.querySelector("#expenses_value"); 
+const balanceInfo = document.getElementById("balance_info"); 
 
-const incomes = []; //W tej tablicy będą zapisywane dochody
-const expenses = []; //W tej tablicy będą zapisywane wydatki
+const incomes = []; 
+const expenses = [];
 
 /*** DODAWANIE DOCHODÓW ***/
 
@@ -47,23 +47,21 @@ function addIncome(income) {
 
   incomesList.appendChild(li);
 
-  incomeTitle.value = "";
-  incomeValue.value = "";
-
   editBtn.addEventListener("click", function () {
     editIncome(income);
   });
 
   removeBtn.addEventListener("click", function () {
-    deleteIncome();
+    deleteIncome(income);
   });
 }
 
 function editIncome(income) {
+  const incomeIndex = incomes.indexOf(income); 
 
-  const targetLi = document.getElementById(`${income.id}`); //income.id = li.id (identyfikator elementu listy)
-  const paragraphWithTitle = targetLi.querySelector("p"); //złapanie paragrafu, w którym jest tytuł przychodu
-  const spanWithValue = targetLi.querySelector("span"); //złapanie span, w którym jest kwota przychodu
+  const targetLi = document.getElementById(`${income.id}`); 
+  const paragraphWithTitle = targetLi.querySelector("p"); 
+  const spanWithValue = targetLi.querySelector("span"); 
 
   paragraphWithTitle.setAttribute("contenteditable", "true"); 
   spanWithValue.setAttribute("contenteditable", "true"); 
@@ -72,23 +70,22 @@ function editIncome(income) {
 
   const saveBtn = document.createElement("button");
   saveBtn.innerText = "Zapisz";
-  saveBtn.classList.add("edit_button", "list_item_button");
+  saveBtn.classList = "edit_button list_item_button";
 
   divForBtns.appendChild(saveBtn);
 
   const doNotSaveButton = document.createElement("button");
   doNotSaveButton.innerText = "Nie zapisuj";
-  doNotSaveButton.classList.add("delete_button", "list_item_button");
+  doNotSaveButton.classList = "delete_button list_item_button";
 
   divForBtns.appendChild(doNotSaveButton);
 
   targetLi.appendChild(divForBtns);
-
-  const btnDiv = document.getElementsByClassName("item--buttons_container")[0]; 
-  btnDiv.setAttribute("style", "display: none;");
+ 
+  const btnDiv = document.getElementsByClassName("item--buttons_container")[incomeIndex];
+  targetLi.removeChild(btnDiv); 
 
   saveBtn.addEventListener("click", function () {
-
     income.title = paragraphWithTitle.innerText;
     income.amount = Number(spanWithValue.innerText); 
 
@@ -96,21 +93,27 @@ function editIncome(income) {
     spanWithValue.setAttribute("contenteditable", "false");
 
     targetLi.removeChild(divForBtns);
-    btnDiv.setAttribute("style", "display: block;");
+    targetLi.appendChild(btnDiv);
 
     renderIncomesList();
     sumAll();         
   });
 
-  // doNotSaveButton.addEventListener("click", () => {
+  doNotSaveButton.addEventListener("click", function () {
+    paragraphWithTitle.setAttribute("contenteditable", "false"); 
+    spanWithValue.setAttribute("contenteditable", "false"); 
+    
+    targetLi.removeChild(divForBtns);
+    targetLi.appendChild(btnDiv);
 
-  // })
+    renderIncomesList();
+    sumAll();    
+  })
 }
 
-function deleteIncome() {
-  incomes.filter((income) => {
-    incomes.splice(income, 1);
-  });
+function deleteIncome(income) {
+  const index = incomes.indexOf(income);
+  incomes.splice(incomes[index], 1);
   renderIncomesList();
   sumAll();
 }
@@ -154,7 +157,7 @@ incomesForm.addEventListener("submit", (e) => {
 
 function addExpense(expense) {
   const li = document.createElement("li");
-  li.id = expense.id; 
+  li.id = expense.id;
   li.classList = "flex budget_list_item";
 
   const paragraph = document.createElement("p");
@@ -188,16 +191,16 @@ function addExpense(expense) {
   });
 
   removeBtn.addEventListener("click", function () {
-    deleteExpense();
+    deleteExpense(expense);
   });
 }
 
 function editExpense(expense) {
+  const expenseIndex = expenses.indexOf(expense); 
+
   const targetLi = document.getElementById(`${expense.id}`);
   const paragraphWithTitle = targetLi.querySelector("p");
   const spanWithValue = targetLi.querySelector("span");
-  const editBtn = document.getElementsByClassName("edit_button")[0];
-  const deleteBtn = document.getElementsByClassName("delete_button")[0];
 
   paragraphWithTitle.setAttribute("contenteditable", "true");
   spanWithValue.setAttribute("contenteditable", "true");
@@ -206,26 +209,22 @@ function editExpense(expense) {
 
   const saveBtn = document.createElement("button");
   saveBtn.innerText = "Zapisz";
-  saveBtn.classList.add("edit_button", "list_item_button");
+  saveBtn.classList = "edit_button list_item_button";
 
   divForBtns.appendChild(saveBtn);
 
   const doNotSaveButton = document.createElement("button");
   doNotSaveButton.innerText = "Nie zapisuj";
-  doNotSaveButton.classList.add("delete_button", "list_item_button");
+  doNotSaveButton.classList = "delete_button list_item_button";
 
   divForBtns.appendChild(doNotSaveButton);
 
   targetLi.appendChild(divForBtns);
 
-  editBtn.setAttribute("style", "display: none");
-  deleteBtn.setAttribute("style", "display: none");
+  const btnDiv = document.getElementsByClassName("item--buttons_container")[expenseIndex];
+  targetLi.removeChild(btnDiv);
 
-  const btnDiv = document.getElementsByClassName("item--buttons_container")[0];
-  btnDiv.setAttribute("style", "display: none;");
-
-  saveBtn.addEventListener("click", () => {
-
+  saveBtn.addEventListener("click", function () {
     expense.title = paragraphWithTitle.innerText;
     expense.amount = Number(spanWithValue.innerText);
 
@@ -233,20 +232,27 @@ function editExpense(expense) {
     spanWithValue.setAttribute("contenteditable", "false");
 
     targetLi.removeChild(divForBtns);
-    btnDiv.setAttribute("style", "display: block;");
+    targetLi.appendChild(btnDiv);
 
+    renderExpensesList();
+    sumAll();    
   })
 
-  // doNotSaveButton.addEventListener("click", () => {
+  doNotSaveButton.addEventListener("click", function () {
+    paragraphWithTitle.setAttribute("contenteditable", "false");
+    spanWithValue.setAttribute("contenteditable", "false");
 
-  // })
+    targetLi.removeChild(divForBtns);
+    targetLi.appendChild(btnDiv);
+
+    renderExpensesList();
+    sumAll();
+  })
 }
 
-function deleteExpense() {
-  expenses.filter((expense) => {
-    expenses.splice(expense, 1);
-  });
-
+function deleteExpense(expense) {
+  const index = expenses.indexOf(expense);
+  expenses.splice(expenses[index], 1); 
   renderExpensesList();
   sumAll();
 }
@@ -303,7 +309,7 @@ function addNewExpense() {
   const newExpense = {
     title: expenseTitle.value,
     amount: Number(expenseValue.value),
-    id: uuidv4(),
+    id: uuidv4(), 
   };
 
   if (!newExpense.amount) {
