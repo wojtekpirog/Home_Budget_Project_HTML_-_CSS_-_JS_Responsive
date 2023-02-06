@@ -14,21 +14,21 @@ const balanceInfo = document.getElementById("balance_info");
 const incomes = [];
 const expenses = [];
 
-function addIncome(income) {
+function addElement(elements, element, targetUl) {
   const li = document.createElement("li");
-  li.id = income.id;
+  li.id = element.id;
   li.classList = "flex budget_list_item";
 
   const paragraph = document.createElement("p");
-  paragraph.classList = "list_item_element list_item_data ";
-  paragraph.innerText = income.title;
+  paragraph.classList = "list_item_element list_item_data";
+  paragraph.innerText = element.title;
 
   const span = document.createElement("span");
   span.classList = "list_item_element list_item_data";
-  span.innerText = income.amount;
+  span.innerText = element.amount;
 
   const btnContainer = document.createElement("div");
-  btnContainer.classList.add("item--buttons_container");
+  btnContainer.className = "item--buttons_container";
 
   const editBtn = document.createElement("button");
   editBtn.classList = "list_item_element edit_button";
@@ -45,20 +45,20 @@ function addIncome(income) {
   li.appendChild(span);
   li.appendChild(btnContainer);
 
-  incomesList.appendChild(li);
+  targetUl.appendChild(li);
 
   editBtn.addEventListener("click", function () {
-    editIncome(income);
+    editElement(elements, element, targetUl);
   });
 
   removeBtn.addEventListener("click", function () {
-    deleteIncome(income);
+    deleteElement(elements, element, targetUl);
   });
 }
 
-function editIncome(income) {
-  const incomeIndex = incomes.indexOf(income);
-  const targetLi = document.getElementById(`${income.id}`);
+function editElement(elements, element, targetUl) {
+  const elementIndex = elements.indexOf(element);
+  const targetLi = document.getElementById(`${element.id}`);
   const paragraphWithTitle = targetLi.querySelector("p");
   const spanWithValue = targetLi.querySelector("span");
 
@@ -82,7 +82,7 @@ function editIncome(income) {
   targetLi.appendChild(divForBtns);
 
   const btnDiv = document.getElementsByClassName("item--buttons_container")[
-    incomeIndex
+    elementIndex
   ];
   targetLi.removeChild(btnDiv);
 
@@ -93,8 +93,8 @@ function editIncome(income) {
       if (!paragraphWithTitle.innerText) {
         alert("Podaj tytuł Twojego przychodu!");
       } else {
-        income.title = paragraphWithTitle.innerText;
-        income.amount = Number(spanWithValue.innerText);
+        element.title = paragraphWithTitle.innerText;
+        element.amount = Number(spanWithValue.innerText);
 
         paragraphWithTitle.setAttribute("contenteditable", "false");
         spanWithValue.setAttribute("contenteditable", "false");
@@ -102,7 +102,7 @@ function editIncome(income) {
         targetLi.removeChild(divForBtns);
         targetLi.appendChild(btnDiv);
 
-        renderIncomesList();
+        renderElementsList(elements, targetUl);
         sumAll();
       }
     } else {
@@ -117,25 +117,23 @@ function editIncome(income) {
     targetLi.removeChild(divForBtns);
     targetLi.appendChild(btnDiv);
 
-    renderIncomesList();
+    renderElementsList(elements, targetUl);
     sumAll();
   });
 }
 
-function deleteIncome(income) {
-  const index = incomes.indexOf(income);
-  incomes.splice(incomes[index], 1);
-  renderIncomesList();
+function deleteElement(elements, element, targetUl) {
+  const index = elements.indexOf(element);
+  elements.splice(elements[index], 1);
+  renderElementsList(elements, targetUl);
   sumAll();
 }
 
-function renderIncomesList() {
-  incomesList.innerHTML = "";
-  incomes.forEach((income) => {
-    addIncome(income);
+function renderElementsList(elements, targetUl) {
+  targetUl.innerHTML = "";
+  elements.forEach((element) => {
+    addElement(elements, element, targetUl);
   });
-  incomeTitle.value = "";
-  incomeValue.value = "";
 }
 
 function addNewIncome() {
@@ -158,137 +156,13 @@ function addNewIncome() {
   }
 
   sumAll();
-  renderIncomesList();
+  renderElementsList(incomes, incomesList);
 }
 
 incomesForm.addEventListener("submit", (e) => {
   e.preventDefault();
   addNewIncome();
 });
-
-function addExpense(expense) {
-  const li = document.createElement("li");
-  li.id = expense.id;
-  li.classList = "flex budget_list_item";
-
-  const paragraph = document.createElement("p");
-  paragraph.classList = "list_item_element list_item_data";
-  paragraph.innerText = expense.title;
-
-  const span = document.createElement("span");
-  span.classList = "list_item_element list_item_data";
-  span.innerText = expense.amount;
-
-  const btnContainer = document.createElement("div");
-  btnContainer.classList.add("item--buttons_container");
-
-  const editBtn = document.createElement("button");
-  editBtn.classList = "list_item_element edit_button";
-  editBtn.innerText = "Edytuj";
-
-  const removeBtn = document.createElement("button");
-  removeBtn.classList = "list_item_element delete_button";
-  removeBtn.innerText = "Usuń";
-
-  btnContainer.appendChild(editBtn);
-  btnContainer.appendChild(removeBtn);
-
-  li.appendChild(paragraph);
-  li.appendChild(span);
-  li.appendChild(btnContainer);
-
-  expensesList.appendChild(li);
-
-  editBtn.addEventListener("click", function () {
-    editExpense(expense);
-  });
-
-  removeBtn.addEventListener("click", function () {
-    deleteExpense(expense);
-  });
-}
-
-function editExpense(expense) {
-  const expenseIndex = expenses.indexOf(expense);
-  const targetLi = document.getElementById(`${expense.id}`);
-  const paragraphWithTitle = targetLi.querySelector("p");
-  const spanWithValue = targetLi.querySelector("span");
-
-  paragraphWithTitle.setAttribute("contenteditable", "true");
-  spanWithValue.setAttribute("contenteditable", "true");
-
-  const divForBtns = document.createElement("div");
-
-  const saveBtn = document.createElement("button");
-  saveBtn.innerText = "Zapisz";
-  saveBtn.classList = "edit_button list_item_element";
-
-  divForBtns.appendChild(saveBtn);
-
-  const doNotSaveButton = document.createElement("button");
-  doNotSaveButton.innerText = "Nie zapisuj";
-  doNotSaveButton.classList = "delete_button list_item_element";
-
-  divForBtns.appendChild(doNotSaveButton);
-
-  targetLi.appendChild(divForBtns);
-
-  const btnDiv = document.getElementsByClassName("item--buttons_container")[
-    expenseIndex
-  ];
-  targetLi.removeChild(btnDiv);
-
-  saveBtn.addEventListener("click", function () {
-    if (!Number(spanWithValue.innerText)) {
-      window.alert("Podaj kwotę wydatku!");
-    } else if (Number(spanWithValue.innerText) > 0) {
-      if (!paragraphWithTitle.innerText) {
-        window.alert("Podaj tytuł Twojego wydatku!");
-      } else {
-        expense.title = paragraphWithTitle.innerText;
-        expense.amount = Number(spanWithValue.innerText);
-
-        paragraphWithTitle.setAttribute("contenteditable", "false");
-        spanWithValue.setAttribute("contenteditable", "false");
-
-        targetLi.removeChild(divForBtns);
-        targetLi.appendChild(btnDiv);
-
-        renderExpensesList();
-        sumAll();
-      }
-    } else {
-      window.alert("Podaj liczbę większą od zera!");
-    }
-  });
-
-  doNotSaveButton.addEventListener("click", function () {
-    paragraphWithTitle.setAttribute("contenteditable", "false");
-    spanWithValue.setAttribute("contenteditable", "false");
-
-    targetLi.removeChild(divForBtns);
-    targetLi.appendChild(btnDiv);
-
-    renderExpensesList();
-    sumAll();
-  });
-}
-
-function deleteExpense(expense) {
-  const index = expenses.indexOf(expense);
-  expenses.splice(expenses[index], 1);
-  renderExpensesList();
-  sumAll();
-}
-
-function renderExpensesList() {
-  expensesList.innerHTML = "";
-  expenses.forEach((expense) => {
-    addExpense(expense);
-  });
-  expenseTitle.value = "";
-  expenseValue.value = "";
-}
 
 function sumAll() {
   let sumOfIncomes = 0;
@@ -350,7 +224,7 @@ function addNewExpense() {
     alert("Podaj liczbę większą od zera!");
   }
 
-  renderExpensesList();
+  renderElementsList(expenses, expensesList);
   sumAll();
 }
 
