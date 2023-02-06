@@ -12,16 +12,6 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
-input {
-  margin: 5px 0;
-  padding: 10px;
-  outline: none;
-  border: none;
-  border-radius: 4px;
-  font-size: var(--font-m);
-  letter-spacing: 1px;
-}
-
 .container {
   width: 96%;
   display: flex;
@@ -106,6 +96,16 @@ h2 {
   font-weight: bold;
 }
 
+input {
+  margin: 5px 0;
+  padding: 10px;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  font-size: var(--font-m);
+  letter-spacing: 1px;
+}
+
 .list_summary {
   display: inline-block;
   margin: 30px 0;
@@ -118,18 +118,6 @@ h2 {
 
 .expenses_summary {
   border-bottom: 2px solid var(--negative);
-}
-
-footer {
-  height: 76px;
-  padding: 30px;
-  text-align: center;
-}
-
-footer a {
-  color: var(--white);
-  text-decoration: none;
-  transition: color 0.5s linear;
 }
 
 .list {
@@ -149,28 +137,42 @@ footer a {
   font-size: var(--font-m);
 }
 
-.list_item_button {
-  padding: 10px 20px;
+.list_item_element {
+  padding: 5px 10px;
   margin-top: 6px;
   border: none;
   outline: none;
-  border-radius: 2px;
   font-size: var(--font-m);
   font-weight: bold;
-}
-
-.edit_button {
-  background-color: var(--deep-blue);
   color: var(--white);
   margin-right: 6px;
   transition: background-color 0.5s linear;
 }
 
+.edit_button {
+  background-color: var(--deep-blue);
+}
+
 .delete_button {
   background-color: var(--negative);
+}
+
+.list_item_data {
+  background-color: var(--background-color);
+  color: var(--data-background);
+  width: 120px;
+}
+
+footer {
+  height: 76px;
+  padding: 30px;
+  text-align: center;
+}
+
+footer a {
   color: var(--white);
-  margin-left: 6px;
-  transition: background-color 0.5s linear;
+  text-decoration: none;
+  transition: color 0.5s linear;
 }
 
 @media only screen and (min-width: 768px) {

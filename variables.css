@@ -1,16 +1,16 @@
 :root {
+  --font-sm: 14px;
+  --font-m: 20px;
+  --font-l: 28px;
   --font-xl: 32px;
   --header-color: #ff826e;
-  --font-l: 28px;
-  --font-m: 20px;
-  --font-sm: 14px;
   --negative: #f70e0e;
   --positive: #0bab64;
+  --zero: #e3c165;
   --biscuit: #f0d0b4;
   --white: #fff;
-  --background-color: rgb(60, 60, 60);
-  --zero: #e3c165;
+  --background-color: #3c3c3c;
   --deep-blue: #0b0b43;
-  --golden: #fcd770;
   --light-blue: #69d6f4;
+  --golden: #fcd770;
 }

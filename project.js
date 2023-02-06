@@ -20,20 +20,22 @@ function addIncome(income) {
   li.classList = "flex budget_list_item";
 
   const paragraph = document.createElement("p");
+  paragraph.classList = "list_item_element list_item_data ";
   paragraph.innerText = income.title;
 
   const span = document.createElement("span");
+  span.classList = "list_item_element list_item_data";
   span.innerText = income.amount;
 
   const btnContainer = document.createElement("div");
   btnContainer.classList.add("item--buttons_container");
 
   const editBtn = document.createElement("button");
-  editBtn.classList = "list_item_button edit_button";
+  editBtn.classList = "list_item_element edit_button";
   editBtn.innerText = "Edytuj";
 
   const removeBtn = document.createElement("button");
-  removeBtn.classList = "list_item_button delete_button";
+  removeBtn.classList = "list_item_element delete_button";
   removeBtn.innerText = "Usuń";
 
   btnContainer.appendChild(editBtn);
@@ -67,13 +69,13 @@ function editIncome(income) {
 
   const saveBtn = document.createElement("button");
   saveBtn.innerText = "Zapisz";
-  saveBtn.classList = "edit_button list_item_button";
+  saveBtn.classList = "edit_button list_item_element";
 
   divForBtns.appendChild(saveBtn);
 
   const doNotSaveButton = document.createElement("button");
   doNotSaveButton.innerText = "Nie zapisuj";
-  doNotSaveButton.classList = "delete_button list_item_button";
+  doNotSaveButton.classList = "delete_button list_item_element";
 
   divForBtns.appendChild(doNotSaveButton);
 
@@ -85,17 +87,27 @@ function editIncome(income) {
   targetLi.removeChild(btnDiv);
 
   saveBtn.addEventListener("click", function () {
-    income.title = paragraphWithTitle.innerText;
-    income.amount = Number(spanWithValue.innerText);
+    if (!Number(spanWithValue.innerText)) {
+      window.alert("Podaj kwotę Twojego przychodu!");
+    } else if (Number(spanWithValue.innerText) > 0) {
+      if (!paragraphWithTitle.innerText) {
+        alert("Podaj tytuł Twojego przychodu!");
+      } else {
+        income.title = paragraphWithTitle.innerText;
+        income.amount = Number(spanWithValue.innerText);
 
-    paragraphWithTitle.setAttribute("contenteditable", "false");
-    spanWithValue.setAttribute("contenteditable", "false");
+        paragraphWithTitle.setAttribute("contenteditable", "false");
+        spanWithValue.setAttribute("contenteditable", "false");
 
-    targetLi.removeChild(divForBtns);
-    targetLi.appendChild(btnDiv);
+        targetLi.removeChild(divForBtns);
+        targetLi.appendChild(btnDiv);
 
-    renderIncomesList();
-    sumAll();
+        renderIncomesList();
+        sumAll();
+      }
+    } else {
+      window.alert("Podaj liczbę większą od zera!");
+    }
   });
 
   doNotSaveButton.addEventListener("click", function () {
@@ -160,20 +172,22 @@ function addExpense(expense) {
   li.classList = "flex budget_list_item";
 
   const paragraph = document.createElement("p");
+  paragraph.classList = "list_item_element list_item_data";
   paragraph.innerText = expense.title;
 
   const span = document.createElement("span");
+  span.classList = "list_item_element list_item_data";
   span.innerText = expense.amount;
 
   const btnContainer = document.createElement("div");
   btnContainer.classList.add("item--buttons_container");
 
   const editBtn = document.createElement("button");
-  editBtn.classList = "list_item_button edit_button";
+  editBtn.classList = "list_item_element edit_button";
   editBtn.innerText = "Edytuj";
 
   const removeBtn = document.createElement("button");
-  removeBtn.classList = "list_item_button delete_button";
+  removeBtn.classList = "list_item_element delete_button";
   removeBtn.innerText = "Usuń";
 
   btnContainer.appendChild(editBtn);
@@ -207,13 +221,13 @@ function editExpense(expense) {
 
   const saveBtn = document.createElement("button");
   saveBtn.innerText = "Zapisz";
-  saveBtn.classList = "edit_button list_item_button";
+  saveBtn.classList = "edit_button list_item_element";
 
   divForBtns.appendChild(saveBtn);
 
   const doNotSaveButton = document.createElement("button");
   doNotSaveButton.innerText = "Nie zapisuj";
-  doNotSaveButton.classList = "delete_button list_item_button";
+  doNotSaveButton.classList = "delete_button list_item_element";
 
   divForBtns.appendChild(doNotSaveButton);
 
@@ -225,17 +239,27 @@ function editExpense(expense) {
   targetLi.removeChild(btnDiv);
 
   saveBtn.addEventListener("click", function () {
-    expense.title = paragraphWithTitle.innerText;
-    expense.amount = Number(spanWithValue.innerText);
+    if (!Number(spanWithValue.innerText)) {
+      window.alert("Podaj kwotę wydatku!");
+    } else if (Number(spanWithValue.innerText) > 0) {
+      if (!paragraphWithTitle.innerText) {
+        window.alert("Podaj tytuł Twojego wydatku!");
+      } else {
+        expense.title = paragraphWithTitle.innerText;
+        expense.amount = Number(spanWithValue.innerText);
 
-    paragraphWithTitle.setAttribute("contenteditable", "false");
-    spanWithValue.setAttribute("contenteditable", "false");
+        paragraphWithTitle.setAttribute("contenteditable", "false");
+        spanWithValue.setAttribute("contenteditable", "false");
 
-    targetLi.removeChild(divForBtns);
-    targetLi.appendChild(btnDiv);
+        targetLi.removeChild(divForBtns);
+        targetLi.appendChild(btnDiv);
 
-    renderExpensesList();
-    sumAll();
+        renderExpensesList();
+        sumAll();
+      }
+    } else {
+      window.alert("Podaj liczbę większą od zera!");
+    }
   });
 
   doNotSaveButton.addEventListener("click", function () {

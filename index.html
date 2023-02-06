@@ -6,19 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="author" content="Wojciech Piróg" />
     <meta name="keywords" content="household, budget, expenses, income" />
+    <link rel="stylesheet" type="text/css" href="reset.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" type="text/css" href="reset.css" />
     <link rel="stylesheet" type="text/css" href="variables.css" />
     <link rel="stylesheet" type="text/css" href="styles.css" />
     <title>Budget tracker</title>
   </head>
   <body>
-    <main class="container">
+    <div class="container">
       <header>
         <h1 class="text-center">Budżet Domowy</h1>
         <div class="logo">
@@ -33,41 +33,56 @@
         </p>
       </header>
 
-      <section class="flex">
-        <div class="incomes">
-          <h2 class="list_header">Przychody</h2>
-          <form id="incomesForm" class="list_form">
-            <input
-              type="text"
-              id="incomeTitle"
-              placeholder="Enter income name"
-            />
-            <input type="number" id="incomeValue" placeholder="Enter amount" />
-            <button type="submit" class="input_button">Dodaj</button>
-          </form>
-          <ul id="incomesList" class="list"></ul>
-          <p class="list_summary incomes_summary">
-            Suma przychodów: <span id="incomes_value">0</span> PLN
-          </p>
+      <main>
+        <div class="flex">
+          <section>
+            <div class="incomes">
+              <h2 class="list_header">Przychody</h2>
+              <form id="incomesForm" class="list_form">
+                <input
+                  type="text"
+                  id="incomeTitle"
+                  placeholder="Enter income name"
+                />
+                <input
+                  type="number"
+                  id="incomeValue"
+                  placeholder="Enter amount"
+                />
+                <button type="submit" class="input_button">Dodaj</button>
+              </form>
+              <ul id="incomesList" class="list"></ul>
+              <p class="list_summary incomes_summary">
+                Suma przychodów: <span id="incomes_value">0</span> PLN
+              </p>
+            </div>
+          </section>
+          <section>
+            <div class="expenses">
+              <h2 class="list_header">Wydatki</h2>
+              <form id="expensesForm" class="list_form">
+                <input
+                  type="text"
+                  id="expenseTitle"
+                  placeholder="Enter expense name"
+                />
+                <input
+                  type="number"
+                  id="expenseValue"
+                  placeholder="Enter amount"
+                />
+                <button type="submit" class="input_button">Dodaj</button>
+              </form>
+              <ul id="expensesList" class="list"></ul>
+              <p class="list_summary expenses_summary">
+                Suma wydatków: <span id="expenses_value">0</span> PLN
+              </p>
+            </div>
+          </section>
         </div>
-        <div class="expenses">
-          <h2 class="list_header">Wydatki</h2>
-          <form id="expensesForm" class="list_form">
-            <input
-              type="text"
-              id="expenseTitle"
-              placeholder="Enter expense name"
-            />
-            <input type="number" id="expenseValue" placeholder="Enter amount" />
-            <button type="submit" class="input_button">Dodaj</button>
-          </form>
-          <ul id="expensesList" class="list"></ul>
-          <p class="list_summary expenses_summary">
-            Suma wydatków: <span id="expenses_value">0</span> PLN
-          </p>
-        </div>
-      </section>
-    </main>
+      </main>
+    </div>
+
     <footer>
       <a
         target="_blank"
