@@ -1,5 +1,3 @@
-@import "./variables.css";
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -43,7 +41,7 @@ h1 {
 }
 
 h2 {
-  color: var(--biscuit);
+  color: var(--footer-and-h2-biscuit);
   font-size: var(--font-l);
   text-align: center;
 }
@@ -74,10 +72,6 @@ h2 {
 .incomes,
 .expenses {
   margin-top: 30px;
-}
-
-.list_header {
-  color: #f0d0b4;
 }
 
 .list_form {
@@ -126,27 +120,26 @@ input {
   border-bottom: 2px solid var(--deep-blue);
 }
 
-.budget_list_item {
-  padding: 5px;
-  align-items: center;
-}
-
-.budget_list_item p,
-.budget_list_item span {
-  margin: 6px;
-  font-size: var(--font-m);
+.list li {
+  margin-bottom: 10px;
 }
 
 .list_item_element {
   padding: 5px 10px;
-  margin-top: 6px;
+  margin: 6px 6px 0 0;
   border: none;
   outline: none;
   font-size: var(--font-m);
   font-weight: bold;
   color: var(--white);
-  margin-right: 6px;
-  transition: background-color 0.5s linear;
+}
+
+.list_item_element[disabled] {
+  color: var(--white);
+}
+.name_input,
+.value_input {
+  color: var(--text-color);
 }
 
 .edit_button {
@@ -172,7 +165,6 @@ footer {
 footer a {
   color: var(--white);
   text-decoration: none;
-  transition: color 0.5s linear;
 }
 
 @media only screen and (min-width: 768px) {
@@ -184,10 +176,9 @@ footer a {
 @media only screen and (min-width: 1024px) {
   .container {
     width: 960px;
-    height: calc(100vh - 50px);
   }
   .text-center {
-    padding-top: 0;
+    padding-top: 30px;
   }
   .flex {
     flex-direction: row;
@@ -198,25 +189,20 @@ footer a {
   input {
     margin: 5px 0;
     padding: 4px;
-    font-size: 16px;
+    font-size: var(--font-sm);
   }
   .input_button {
     padding: 5px;
-    margin: 0;
   }
   .input_button:hover {
     background-color: var(--zero);
   }
-  .budget_list_item p,
-  .budget_list_item span {
-    font-size: 16px;
-  }
-  .budget_list_item p,
-  .budget_list_item span {
-    margin: 0;
-  }
   .list_item_button {
     padding: 4px 8px;
+    font-size: var(--font-sm);
+  }
+  .list_item_element {
+    width: 100px;
     font-size: var(--font-sm);
   }
   .list_summary {
@@ -228,12 +214,15 @@ footer a {
   .delete_button:hover {
     background-color: darkred;
   }
+  .pointer {
+    cursor: pointer;
+  }
   footer {
     height: 50px;
     padding: 17px;
   }
   footer a:hover {
-    color: var(--biscuit);
+    color: var(--footer-and-h2-biscuit);
     cursor: pointer;
   }
 }

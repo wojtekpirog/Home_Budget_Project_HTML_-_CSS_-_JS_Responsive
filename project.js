@@ -17,7 +17,7 @@ const expenses = [];
 function addElement(elements, element, targetUl) {
   const li = document.createElement("li");
   li.id = element.id;
-  li.classList = "flex budget_list_item";
+  li.classList = "flex";
 
   // const paragraph = document.createElement("p");
   // paragraph.classList = "list_item_element list_item_data";
@@ -33,8 +33,8 @@ function addElement(elements, element, targetUl) {
   // span.innerText = element.amount;
 
   const inputWithValue = document.createElement("input");
-  inputWithValue.type = "number";
   inputWithValue.disabled = true;
+  inputWithValue.type = "number";
   inputWithValue.classList = "list_item_element value_input";
   inputWithValue.value = element.amount;
 
@@ -42,11 +42,11 @@ function addElement(elements, element, targetUl) {
   btnContainer.className = "item--buttons_container";
 
   const editBtn = document.createElement("button");
-  editBtn.classList = "list_item_element edit_button";
+  editBtn.classList = "list_item_element edit_button pointer";
   editBtn.innerText = "Edytuj";
 
   const removeBtn = document.createElement("button");
-  removeBtn.classList = "list_item_element delete_button";
+  removeBtn.classList = "list_item_element delete_button pointer";
   removeBtn.innerText = "Usuń";
 
   btnContainer.appendChild(editBtn);
@@ -86,13 +86,13 @@ function editElement(elements, element, targetUl) {
 
   const saveBtn = document.createElement("button");
   saveBtn.innerText = "Zapisz";
-  saveBtn.classList = "edit_button list_item_element";
+  saveBtn.classList = "edit_button list_item_element pointer";
 
   divForBtns.appendChild(saveBtn);
 
   const doNotSaveButton = document.createElement("button");
   doNotSaveButton.innerText = "Nie zapisuj";
-  doNotSaveButton.classList = "delete_button list_item_element";
+  doNotSaveButton.classList = "delete_button list_item_element pointer";
 
   divForBtns.appendChild(doNotSaveButton);
 
