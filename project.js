@@ -19,18 +19,10 @@ function addElement(elements, element, targetUl) {
   li.id = element.id;
   li.classList = "flex";
 
-  // const paragraph = document.createElement("p");
-  // paragraph.classList = "list_item_element list_item_data";
-  // paragraph.innerText = element.title;
-
   const inputWithName = document.createElement("input");
   inputWithName.disabled = true;
   inputWithName.classList = "list_item_element name_input";
   inputWithName.value = element.title;
-
-  // const span = document.createElement("span");
-  // span.classList = "list_item_element list_item_data";
-  // span.innerText = element.amount;
 
   const inputWithValue = document.createElement("input");
   inputWithValue.disabled = true;
@@ -68,16 +60,12 @@ function addElement(elements, element, targetUl) {
 }
 
 function editElement(elements, element, targetUl) {
-  const elementIndex = elements.indexOf(element);
+  //funkcja edytująca
+  // console.log(targetUl);
   const targetLi = document.getElementById(`${element.id}`);
-  // const paragraphWithTitle = targetLi.querySelector("p");
-  // const spanWithValue = targetLi.querySelector("span");
 
   const inputWithName = targetLi.getElementsByClassName("name_input")[0];
   const inputWithValue = targetLi.getElementsByClassName("value_input")[0];
-
-  // paragraphWithTitle.setAttribute("contenteditable", "true");
-  // spanWithValue.setAttribute("contenteditable", "true");
 
   inputWithName.disabled = false;
   inputWithValue.disabled = false;
@@ -99,7 +87,7 @@ function editElement(elements, element, targetUl) {
   targetLi.appendChild(divForBtns);
 
   const btnDiv = document.getElementsByClassName("item--buttons_container")[
-    elementIndex
+    elements.indexOf(element)
   ];
   targetLi.removeChild(btnDiv);
 
@@ -113,17 +101,14 @@ function editElement(elements, element, targetUl) {
         element.title = inputWithName.value;
         element.amount = Number(inputWithValue.value);
 
-        // paragraphWithTitle.setAttribute("contenteditable", "false");
-        // spanWithValue.setAttribute("contenteditable", "false");
-
         inputWithName.disabled = true;
         inputWithValue.disabled = true;
 
         targetLi.removeChild(divForBtns);
         targetLi.appendChild(btnDiv);
 
-        renderElementsList(elements, targetUl);
         sumAll();
+        renderElementsList(elements, targetUl);
       }
     } else {
       alert("Podaj liczbę większą od zera!");
@@ -131,24 +116,21 @@ function editElement(elements, element, targetUl) {
   });
 
   doNotSaveButton.addEventListener("click", function () {
-    // paragraphWithTitle.setAttribute("contenteditable", "false");
-    // spanWithValue.setAttribute("contenteditable", "false");
     inputWithName.disabled = true;
     inputWithValue.disabled = true;
 
     targetLi.removeChild(divForBtns);
     targetLi.appendChild(btnDiv);
 
-    renderElementsList(elements, targetUl);
     sumAll();
+    renderElementsList(elements, targetUl);
   });
-}
+} //koniec funkcji edytującej
 
 function deleteElement(elements, element, targetUl) {
-  const index = elements.indexOf(element);
-  elements.splice(elements[index], 1);
-  renderElementsList(elements, targetUl);
+  elements.splice(elements.indexOf(element), 1);
   sumAll();
+  renderElementsList(elements, targetUl);
 }
 
 function renderElementsList(elements, targetUl) {
