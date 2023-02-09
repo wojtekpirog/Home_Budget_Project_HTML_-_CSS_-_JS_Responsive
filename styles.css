@@ -27,7 +27,6 @@ body {
 
 .logo img {
   width: 100%;
-  height: 100%;
 }
 
 h1 {
@@ -64,15 +63,14 @@ h2 {
   color: var(--negative);
 }
 
+section {
+  padding-top: 30px;
+}
+
 .flex {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-
-.incomes,
-.expenses {
-  margin-top: 30px;
 }
 
 .list_form {
@@ -92,13 +90,12 @@ h2 {
 }
 
 input {
-  margin: 5px 0;
+  margin-bottom: 10px;
   padding: 10px;
   outline: none;
   border: none;
   border-radius: 4px;
   font-size: var(--font-m);
-  letter-spacing: 1px;
 }
 
 .list_summary {
@@ -188,8 +185,7 @@ footer a {
     display: block;
   }
   input {
-    margin: 5px 0;
-    padding: 4px;
+    padding: 6px;
     font-size: var(--font-sm);
   }
   .input_button {

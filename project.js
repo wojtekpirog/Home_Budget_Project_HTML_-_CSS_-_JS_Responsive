@@ -19,118 +19,105 @@ function addElement(elements, element, targetUl) {
   li.id = element.id;
   li.classList = "flex";
 
-  const inputWithName = document.createElement("input");
-  inputWithName.disabled = true;
-  inputWithName.classList = "list_item_element name_input";
-  inputWithName.value = element.title;
+  const inputWithTitle = document.createElement("input");
+  inputWithTitle.disabled = true;
+  inputWithTitle.classList = "list_item_element name_input";
+  inputWithTitle.value = element.title;
 
-  const inputWithValue = document.createElement("input");
-  inputWithValue.disabled = true;
-  inputWithValue.type = "number";
-  inputWithValue.classList = "list_item_element value_input";
-  inputWithValue.value = element.amount;
+  const inputWithAmount = document.createElement("input");
+  inputWithAmount.disabled = true;
+  inputWithAmount.type = "number";
+  inputWithAmount.classList = "list_item_element value_input";
+  inputWithAmount.value = element.amount;
 
   const btnContainer = document.createElement("div");
-  btnContainer.className = "item--buttons_container";
+  btnContainer.classList = `item--buttons_container`;
 
   const editBtn = document.createElement("button");
-  editBtn.classList = "list_item_element edit_button pointer";
+  editBtn.classList = "edit_button list_item_element  pointer";
   editBtn.innerText = "Edytuj";
 
   const removeBtn = document.createElement("button");
-  removeBtn.classList = "list_item_element delete_button pointer";
+  removeBtn.classList = "delete_button list_item_element  pointer";
   removeBtn.innerText = "Usuń";
 
   btnContainer.appendChild(editBtn);
   btnContainer.appendChild(removeBtn);
 
-  li.appendChild(inputWithName);
-  li.appendChild(inputWithValue);
+  li.appendChild(inputWithTitle);
+  li.appendChild(inputWithAmount);
   li.appendChild(btnContainer);
 
   targetUl.appendChild(li);
 
-  editBtn.addEventListener("click", function () {
-    editElement(elements, element, targetUl);
-  });
+  function editElement() {
+    inputWithTitle.disabled = false;
+    inputWithAmount.disabled = false;
 
-  removeBtn.addEventListener("click", function () {
-    deleteElement(elements, element, targetUl);
-  });
-}
+    const saveBtn = document.createElement("button");
+    saveBtn.classList = "edit_button list_item_element  pointer";
+    saveBtn.innerText = "Zapisz";
 
-function editElement(elements, element, targetUl) {
-  //funkcja edytująca
-  // console.log(targetUl);
-  const targetLi = document.getElementById(`${element.id}`);
+    const doNotSaveBtn = document.createElement("button");
+    doNotSaveBtn.classList = "delete_button list_item_element  pointer";
+    doNotSaveBtn.innerText = "Nie zapisuj";
 
-  const inputWithName = targetLi.getElementsByClassName("name_input")[0];
-  const inputWithValue = targetLi.getElementsByClassName("value_input")[0];
+    btnContainer.removeChild(editBtn);
+    btnContainer.removeChild(removeBtn);
 
-  inputWithName.disabled = false;
-  inputWithValue.disabled = false;
+    btnContainer.appendChild(saveBtn);
+    btnContainer.appendChild(doNotSaveBtn);
 
-  const divForBtns = document.createElement("div");
+    saveBtn.addEventListener("click", () => {
+      if (!Number(inputWithAmount.value)) {
+        alert("Podaj kwotę Twojej transakcji!");
+      } else if (Number(inputWithAmount.value) > 0) {
+        if (!inputWithTitle.value) {
+          alert("Podaj tytuł Twojej transakcji!");
+        } else {
+          element.title = inputWithTitle.value;
+          element.amount = Number(inputWithAmount.value);
 
-  const saveBtn = document.createElement("button");
-  saveBtn.innerText = "Zapisz";
-  saveBtn.classList = "edit_button list_item_element pointer";
+          inputWithTitle.disabled = true;
+          inputWithAmount.disabled = true;
 
-  divForBtns.appendChild(saveBtn);
+          btnContainer.removeChild(saveBtn);
+          btnContainer.removeChild(doNotSaveBtn);
 
-  const doNotSaveButton = document.createElement("button");
-  doNotSaveButton.innerText = "Nie zapisuj";
-  doNotSaveButton.classList = "delete_button list_item_element pointer";
+          btnContainer.appendChild(editBtn);
+          btnContainer.appendChild(removeBtn);
 
-  divForBtns.appendChild(doNotSaveButton);
-
-  targetLi.appendChild(divForBtns);
-
-  const btnDiv = document.getElementsByClassName("item--buttons_container")[
-    elements.indexOf(element)
-  ];
-  targetLi.removeChild(btnDiv);
-
-  saveBtn.addEventListener("click", function () {
-    if (!Number(inputWithValue.value)) {
-      alert("Podaj kwotę Twojego przychodu!");
-    } else if (Number(inputWithValue.value) > 0) {
-      if (!inputWithName.value) {
-        alert("Podaj tytuł Twojego przychodu!");
+          sumAll();
+          renderElementsList(elements, targetUl);
+        }
       } else {
-        element.title = inputWithName.value;
-        element.amount = Number(inputWithValue.value);
-
-        inputWithName.disabled = true;
-        inputWithValue.disabled = true;
-
-        targetLi.removeChild(divForBtns);
-        targetLi.appendChild(btnDiv);
-
-        sumAll();
-        renderElementsList(elements, targetUl);
+        alert("Podaj dodatnią kwotę Twojej transakcji!");
       }
-    } else {
-      alert("Podaj liczbę większą od zera!");
-    }
-  });
+    });
 
-  doNotSaveButton.addEventListener("click", function () {
-    inputWithName.disabled = true;
-    inputWithValue.disabled = true;
+    doNotSaveBtn.addEventListener("click", () => {
+      inputWithTitle.disabled = true;
+      inputWithAmount.disabled = true;
 
-    targetLi.removeChild(divForBtns);
-    targetLi.appendChild(btnDiv);
+      btnContainer.removeChild(saveBtn);
+      btnContainer.removeChild(doNotSaveBtn);
 
+      btnContainer.appendChild(editBtn);
+      btnContainer.appendChild(removeBtn);
+
+      sumAll();
+      renderElementsList(elements, targetUl);
+    });
+  }
+
+  function removeElement() {
+    elements.splice(elements.indexOf(element), 1);
     sumAll();
     renderElementsList(elements, targetUl);
-  });
-} //koniec funkcji edytującej
+  }
 
-function deleteElement(elements, element, targetUl) {
-  elements.splice(elements.indexOf(element), 1);
-  sumAll();
-  renderElementsList(elements, targetUl);
+  editBtn.addEventListener("click", editElement);
+  removeBtn.addEventListener("click", removeElement);
 }
 
 function renderElementsList(elements, targetUl) {
@@ -148,7 +135,7 @@ function addNewIncome() {
   };
 
   if (!newIncome.amount) {
-    alert("Podaj kwotę przychodu!");
+    alert("Podaj kwotę Twojego przychodu!");
   } else if (newIncome.amount > 0) {
     if (!newIncome.title) {
       alert("Podaj tytuł Twojego przychodu!");
@@ -158,7 +145,7 @@ function addNewIncome() {
       incomeValue.value = "";
     }
   } else {
-    alert("Podaj liczbę większą od zera!");
+    alert("Podaj dodatnią kwotę Twojej transakcji!");
   }
 
   sumAll();
@@ -219,7 +206,7 @@ function addNewExpense() {
   };
 
   if (!newExpense.amount) {
-    alert("Podaj kwotę wydatku!");
+    alert("Podaj kwotę Twojego wydatku!");
   } else if (newExpense.amount > 0) {
     if (!newExpense.title) {
       alert("Podaj tytuł Twojego wydatku!");
@@ -229,7 +216,7 @@ function addNewExpense() {
       expenseValue.value = "";
     }
   } else {
-    alert("Podaj liczbę większą od zera!");
+    alert("Podaj dodatnią kwotę Twojej transakcji!");
   }
 
   sumAll();
